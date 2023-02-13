@@ -1,69 +1,59 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import styles from './layout.module.css';
-import utilStyles from '../styles/utils.module.css';
-import Link from 'next/link';
+import classNames from 'classnames';
+import { useEffect } from 'react';
+import styles from './Layout.module.css';
 
-const name = 'Your Name';
-export const siteTitle = 'Next.js Sample Website';
+export function GradientBackground({ variant, className }) {
+  const classes = classNames(
+    {
+      [styles.colorBackground]: variant === 'large',
+      [styles.colorBackgroundBottom]: variant === 'small',
+    },
+    className
+  );
 
-export default function Layout({ children, home }) {
+  return <div className={classes} />;
+}
+
+export default function Layout({ children }) {
+  const setAppTheme = () => {
+    const darkMode = localStorage.getItem('theme') === 'dark';
+    const lightMode = localStorage.getItem('theme') === 'light';
+
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else if (lightMode) {
+      document.documentElement.classList.remove('dark');
+    }
+    return;
+  };
+
+  const handleSystemThemeChange = () => {
+    var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    darkQuery.onchange = (e) => {
+      if (e.matches) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+    };
+  };
+
+  useEffect(() => {
+    setAppTheme();
+  }, []);
+
+  useEffect(() => {
+    handleSystemThemeChange();
+  }, []);
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta
-          name="description"
-          content="Learn how to build a personal website using Next.js"
-        />
-        <meta
-          property="og:image"
-          content={`https://og-image.vercel.app/${encodeURI(
-            siteTitle,
-          )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
-        />
-        <meta name="og:title" content={siteTitle} />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Head>
-      <header className={styles.header}>
-        {home ? (
-          <>
-            <Image
-              priority
-              src="/images/profile.jpg"
-              className={utilStyles.borderCircle}
-              height={144}
-              width={144}
-              alt=""
-            />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
-          </>
-        ) : (
-          <>
-            <Link href="/">
-              <Image
-                priority
-                src="/images/profile.jpg"
-                className={utilStyles.borderCircle}
-                height={108}
-                width={108}
-                alt=""
-              />
-            </Link>
-            <h2 className={utilStyles.headingLg}>
-              <Link href="/" className={utilStyles.colorInherit}>
-                {name}
-              </Link>
-            </h2>
-          </>
-        )}
-      </header>
-      <main>{children}</main>
-      {!home && (
-        <div className={styles.backToHome}>
-          <Link href="/">← Back to home</Link>
-        </div>
-      )}
+    <div className="relative pb-24 overflow-hidden">
+      <div className="flex flex-col items-center max-w-2xl w-full mx-auto">
+        {children}
+      </div>
     </div>
   );
 }

@@ -1,41 +1,65 @@
-import Head from 'next/head';
-import Layout, { siteTitle } from '../components/layout';
-import utilStyles from '../styles/utils.module.css';
-import { getAllBlogsData } from '../lib/posts';
 import Link from 'next/link';
-import Date from '../components/date';
+import { getPosts } from '../utils/blog-data';
+import Date from '../components/Date';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import Layout, { GradientBackground } from '../components/Layout';
+import ArrowIcon from '../components/ArrowIcon';
+import { getGlobalData } from '../utils/global-data';
+import SEO from '../components/SEO';
 
-export default function Home({ allPostsData }) {
+export default function Index({ posts, globalData }) {
   return (
-    <Layout home>
-      <Head>
-        <title>{siteTitle}</title>
-      </Head>
-      <section className={utilStyles.headingMd}>
-      </section>
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>NextJS Blog</h2>
-        <ul className={utilStyles.list}>
-          {allPostsData.map(({ _id, BlogDate, Title }) => (
-            <li className={utilStyles.listItem} key={_id}>
-              <Link href={`/posts/${_id}`}>{Title}</Link>
-              <br />
-              <small className={utilStyles.lightText}>
-                {<Date dateString={BlogDate} />}
-              </small>
+    <Layout>
+      <SEO title={globalData.name} description={globalData.blogTitle} />
+      <Header name={globalData.name} />
+      <main className="w-full">
+        <h1 className="text-3xl lg:text-5xl text-center mb-12">
+          {globalData.blogTitle}
+        </h1>
+        <ul className="w-full">
+          {posts.map((post) => (
+            <li
+              key={post._id}
+              className="md:first:rounded-t-lg md:last:rounded-b-lg backdrop-blur-lg bg-white dark:bg-black dark:bg-opacity-30 bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-50 transition border border-gray-800 dark:border-white border-opacity-10 dark:border-opacity-10 border-b-0 last:border-b hover:border-b hovered-sibling:border-t-0"
+            >
+              <Link
+                as={`/posts/${post._id}`}
+                href={`/posts/[slug]`}
+                className="py-6 lg:py-10 px-6 lg:px-16 block focus:outline-none focus:ring-4"
+              >
+                  {post.BlogDate && (
+                    <p className="uppercase mb-3 font-bold opacity-60">
+                      {<Date dateString={post.BlogDate} />}
+                    </p>
+                  )}
+                  <h2 className="text-2xl md:text-3xl">{post.Title}</h2>
+                  {post.Subtitle && (
+                    <p className="mt-3 text-lg opacity-60">
+                      {post.Subtitle}
+                    </p>
+                  )}
+                  <ArrowIcon className="mt-4" />
+              </Link>
             </li>
           ))}
         </ul>
-      </section>
+      </main>
+      <Footer copyrightText={globalData.footerText} />
+      <GradientBackground
+        variant="large"
+        className="fixed top-20 opacity-40 dark:opacity-60"
+      />
+      <GradientBackground
+        variant="small"
+        className="absolute bottom-0 opacity-20 dark:opacity-10"
+      />
     </Layout>
   );
 }
 
 export async function getServerSideProps() {
-  const allPostsData = await getAllBlogsData();
-  return {
-    props: {
-      allPostsData,
-    },
-  };
+  const posts = await getPosts();
+  const globalData = getGlobalData();
+  return { props: { posts, globalData } };
 }

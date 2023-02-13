@@ -11,7 +11,7 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Layout, { GradientBackground } from '../../components/Layout';
 import SEO from '../../components/SEO';
-import Date from '../components/Date';
+import Date from '../../components/Date';
 
 export default function PostPage({
   source,

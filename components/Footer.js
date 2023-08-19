@@ -87,12 +87,12 @@ export default function Footer({ copyrightText }) {
       <ThemeSwitcher />
       <p className="mt-5">
         <Link href="https://aspnetmvc-blog.onrender.com/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-          Same Blog date in ASP.NET
+          Same Blog data in ASP.NET
         </Link >
       </p>
       <p>
         <Link href="https://reactjs-blog-alen456.vercel.app/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-        Same Blog date React
+        Same Blog data React
         </Link >
       </p>
     </footer>

@@ -91,7 +91,7 @@ export default function Footer({ copyrightText }) {
         </Link >
       </p>
       <p>
-        <Link href="https://reactjs-blog-alen456.vercel.app/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+        <Link href="https://reactjs-blog-ten.vercel.app/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
         Blog in React
         </Link >
       </p>

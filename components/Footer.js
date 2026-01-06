@@ -87,12 +87,17 @@ export default function Footer({ copyrightText }) {
       <ThemeSwitcher />
       <p className="mt-5">
         <Link href="https://aspnetmvc-blog.onrender.com/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-          Same Blog data in ASP.NET
+          Blog in ASP.NET
         </Link >
       </p>
       <p>
         <Link href="https://reactjs-blog-alen456.vercel.app/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-        Same Blog data React
+        Blog in React
+        </Link >
+      </p>
+      <p>
+        <Link href="https://angular-blog-alen456s-projects.vercel.app/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+        Blog in Angular
         </Link >
       </p>
     </footer>

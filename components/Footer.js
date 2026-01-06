@@ -96,7 +96,7 @@ export default function Footer({ copyrightText }) {
         </Link >
       </p>
       <p>
-        <Link href="https://angular-blog-alen456s-projects.vercel.app/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+        <Link href="https://angular-blog-plum-iota.vercel.app/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
         Blog in Angular
         </Link >
       </p>
